@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "27378995602",
+    "project_id": "feed-the-needy-8ec15",
+    "storage_bucket": "feed-the-needy-8ec15.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27378995602:android:399533853292967d88314b",
+        "android_client_info": {
+          "package_name": "com.example.feed_the_needy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmlBfbQKS33kYGgYIclWa8btibAxKynKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
