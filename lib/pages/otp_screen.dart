@@ -45,6 +45,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   'assets/otp.json',
                   height: 200,
                   width: 200,
+                  repeat: false,
                 ),
                 const SizedBox(
                   height: 50,

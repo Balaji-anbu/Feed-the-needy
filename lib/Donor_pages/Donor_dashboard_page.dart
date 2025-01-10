@@ -62,16 +62,7 @@ class _DonorDashboardPageState extends State<DonorDashboardPage> {
 
         if (userDoc.exists) {
           Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-          isProfileComplete = data['name'] != null &&
-              data['organisationType'] != null &&
-              data['organisationName'] != null &&
-              data['doorNo'] != null &&
-              data['street'] != null &&
-              data['nearWhere'] != null &&
-              data['city'] != null &&
-              data['district'] != null &&
-              data['pincode'] != null &&
-              data['emailId'] != null;
+          isProfileComplete = data['name'] != null && data['emailId'] != null;
         }
       }
     } catch (e) {
