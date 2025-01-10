@@ -1,7 +1,7 @@
 import 'package:feed_the_needy/Delivery_parntner/delivery_details.dart';
 import 'package:feed_the_needy/Delivery_parntner/orders_to_deliver.dart';
+import 'package:feed_the_needy/Delivery_parntner/partner_dashBoard.dart';
 import 'package:feed_the_needy/Delivery_parntner/partner_profile.dart';
-import 'package:feed_the_needy/Donor_pages/Donor_dashboard_page.dart';
 import 'package:feed_the_needy/pages/Language_selection.dart';
 import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +21,7 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
 
   // Pages for each bottom navigation item
   final List<Widget> _pages = [
-    const DonorDashboardPage(), // Home page
+    const DeliveryPartnerDashboardPage(), // Home page
     const DeliveryPartnerPage(), // New orders page
     // Placeholder for the current orders page
     const DeliveryDetailsPage(
@@ -79,7 +79,7 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          AppLocalizations.of(context)!.homeTitle,
+          "Welcome, Home!",
           style:
               const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
@@ -250,7 +250,38 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
         style: TextStyle(
             color: isLogout ? Colors.red : Colors.black, fontSize: 14),
       ),
-      onTap: onTap,
+      onTap: isLogout
+          ? () {
+              // Show confirmation dialog for logout
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirm Sign Out'),
+                    content: Text('Are you sure you want to sign out?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          onTap(); // Perform the actual sign-out
+                        },
+                        child: Text(
+                          'Sign Out',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          : onTap,
     );
   }
 }

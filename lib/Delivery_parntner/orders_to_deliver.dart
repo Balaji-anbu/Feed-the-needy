@@ -23,6 +23,7 @@ class _DeliveryPartnerPageState extends State<DeliveryPartnerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Assigned Deliveries'),
       ),

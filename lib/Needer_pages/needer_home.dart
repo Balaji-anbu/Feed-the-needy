@@ -218,11 +218,40 @@ class HomeFoodNeeder extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: isLogout ? Colors.red : Colors.black,
-          fontSize: 14,
-        ),
+            color: isLogout ? Colors.red : Colors.black, fontSize: 14),
       ),
-      onTap: onTap,
+      onTap: isLogout
+          ? () {
+              // Show confirmation dialog for logout
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirm Sign Out'),
+                    content: Text('Are you sure you want to sign out?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          onTap(); // Perform the actual sign-out
+                        },
+                        child: Text(
+                          'Sign Out',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          : onTap,
     );
   }
 }
