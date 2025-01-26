@@ -7,6 +7,7 @@ import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeFoodDonor extends StatelessWidget {
   const HomeFoodDonor({super.key});
@@ -14,44 +15,39 @@ class HomeFoodDonor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text(
-            AppLocalizations.of(context)!
-                .homeTitle, // Use localization for the title
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          automaticallyImplyLeading: false,
-          actions: [
-            Builder(
-              builder: (context) => IconButton(
-                color: Colors.white,
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context)
-                      .openEndDrawer(); // Open the right-side drawer
-                },
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          AppLocalizations.of(context)!.homeTitle,
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        endDrawer: _buildFullWidthDrawer(context), // Add right-side drawer
-        endDrawerEnableOpenDragGesture:
-            false, // Disable swipe to open for better UX
-        body: const DonorMainPage());
+        automaticallyImplyLeading: false,
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              color: Colors.white,
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            ),
+          ),
+        ],
+      ),
+      endDrawer: _buildFullWidthDrawer(context),
+      endDrawerEnableOpenDragGesture: false,
+      body: const DonorMainPage(),
+    );
   }
 
-  // Build a full-width custom drawer matching the provided design
   SafeArea _buildFullWidthDrawer(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final phoneNumber = user?.phoneNumber?.replaceFirst('+91', '') ?? 'Unknown';
 
     return SafeArea(
       child: Drawer(
-        width: MediaQuery.of(context)
-            .size
-            .width, // Make the drawer full-screen width
+        width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             Container(
@@ -150,7 +146,6 @@ class HomeFoodDonor extends StatelessWidget {
     );
   }
 
-  // Function to build drawer items
   Widget _buildDrawerItem(
       BuildContext context, IconData icon, String title, VoidCallback onTap,
       {bool isLogout = false}) {
@@ -165,22 +160,34 @@ class HomeFoodDonor extends StatelessWidget {
     );
   }
 }
-
-// Function to sign out user
 Future<void> signOutUser(BuildContext context) async {
   try {
+    // Handle Google Sign-Out
+    final googleSignIn = GoogleSignIn();
+    if (await googleSignIn.isSignedIn()) {
+      // Disconnect and sign out the Google account
+      await googleSignIn.disconnect();
+      await googleSignIn.signOut();
+    }
+
+    // Sign out from Firebase
     await FirebaseAuth.instance.signOut();
+
+    // Navigate to the onboarding screen
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => OnboardingScreen()),
     );
   } catch (e) {
-    // ignore: avoid_print
     print('Error signing out: $e');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Error: ${AppLocalizations.of(context)!.signOutError}'),
+        content: Text(
+          AppLocalizations.of(context)!.signOutError,
+          style: const TextStyle(color: Colors.red),
+        ),
       ),
     );
   }
 }
+

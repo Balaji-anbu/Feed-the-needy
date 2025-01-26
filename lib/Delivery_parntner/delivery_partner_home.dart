@@ -1,7 +1,8 @@
-import 'package:feed_the_needy/Delivery_parntner/delivery_details.dart';
-import 'package:feed_the_needy/Delivery_parntner/orders_to_deliver.dart';
+import 'package:feed_the_needy/Delivery_parntner/Current_delivery.dart';
+import 'package:feed_the_needy/Delivery_parntner/Available_orders.dart';
+import 'package:feed_the_needy/Delivery_parntner/completed_orders.dart';
+import 'package:feed_the_needy/Delivery_parntner/partner_dashBoard.dart';
 import 'package:feed_the_needy/Delivery_parntner/partner_profile.dart';
-import 'package:feed_the_needy/Donor_pages/Donor_dashboard_page.dart';
 import 'package:feed_the_needy/pages/Language_selection.dart';
 import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,13 +22,13 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
 
   // Pages for each bottom navigation item
   final List<Widget> _pages = [
-    const DonorDashboardPage(), // Home page
-    const DeliveryPartnerPage(), // New orders page
+   DeliveryPartnerDashboardPage(), // Home page
+     AvailableOrdersPage(), // New orders page
     // Placeholder for the current orders page
-    const DeliveryDetailsPage(
-      deliveryData: {},
-      deliveryId: '',
-    ), // Will be replaced after fetching data
+     CurrentDeliveryPage(
+     
+    ), 
+   CompletedOrdersPage(),
   ];
 
   // Function to fetch delivery data from Firestore based on deliveryId
@@ -52,16 +53,13 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
   // Function to navigate to delivery details page
   void navigateToDeliveryDetails(String deliveryId) async {
     try {
-      // Fetch the delivery data based on deliveryId
-      var deliveryData = await fetchDeliveryData(deliveryId);
 
       // Navigate to DeliveryDetailsPage with fetched delivery data
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DeliveryDetailsPage(
-            deliveryId: deliveryId,
-            deliveryData: deliveryData, // Pass the fetched data
+          builder: (context) => CurrentDeliveryPage(
+            // Pass the fetched data
           ),
         ),
       );
@@ -79,7 +77,7 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          AppLocalizations.of(context)!.homeTitle,
+          "Delivery Partner Dashboard",
           style:
               const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
@@ -100,6 +98,13 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
       endDrawerEnableOpenDragGesture: false,
       body: _pages[_currentIndex], // Display the selected page
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        selectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.grey,
+        selectedFontSize: 12,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -118,6 +123,10 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.list_alt),
             label: AppLocalizations.of(context)!.currentOrders,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.done_all_outlined),
+            label: "Finished",
           ),
         ],
       ),

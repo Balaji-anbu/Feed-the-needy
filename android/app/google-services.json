@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "27378995602",
+    "firebase_url": "https://feed-the-needy-8ec15-default-rtdb.firebaseio.com",
     "project_id": "feed-the-needy-8ec15",
     "storage_bucket": "feed-the-needy-8ec15.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.feed_the_needy"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "27378995602-e2lftu8usrso58223buburtklni2tvtr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.feed_the_needy",
+            "certificate_hash": "5428c3d82f37520046c9ac7c0dd9facb23f33d29"
+          }
+        },
+        {
+          "client_id": "27378995602-p3u0kvg9mkc40h3uc192af57g86jutk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAmlBfbQKS33kYGgYIclWa8btibAxKynKY"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27378995602-p3u0kvg9mkc40h3uc192af57g86jutk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

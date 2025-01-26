@@ -116,7 +116,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.white,
       body: Center(
         child: Image.asset(
-          'assets/splash_animation.gif', // Ensure this file is in the assets folder
+          'assets/splash_animation.gif',
           width: 500,
           height: 600,
           fit: BoxFit.cover,

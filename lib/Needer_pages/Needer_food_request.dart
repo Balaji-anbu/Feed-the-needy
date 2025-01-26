@@ -1,8 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps, use_build_context_synchronously
-
-import 'package:feed_the_needy/Donor_pages/Donor_dashboard_page.dart';
 import 'package:feed_the_needy/Needer_pages/Needer_available_food.dart';
 import 'package:feed_the_needy/Needer_pages/Request_page.dart';
+import 'package:feed_the_needy/Needer_pages/needer_dashboard.dart';
 import 'package:flutter/material.dart';
 
 class NeederFoodRequestPage extends StatefulWidget {
@@ -35,7 +34,7 @@ class _NeederPageState extends State<NeederFoodRequestPage> {
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          const DonorDashboardPage(),
+          const FoodNeederDashboardPage(),
           AvailableFoodPage(),
           RequestsPage(),
         ],

@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:feed_the_needy/pages/otp_screen.dart';
@@ -159,6 +160,37 @@ class _AnimatedPhoneEntryPageState extends State<AnimatedPhoneEntryPage> {
   String _selectedCountryCode = '+91'; // Default country code (India)
   bool _isLoading = false;
 
+Future<UserCredential?> signInWithGoogle() async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  // Force account selection
+  final GoogleSignInAccount? googleUser = await googleSignIn.signInSilently();
+  if (googleUser != null) {
+    await googleSignIn.disconnect();
+  }
+
+  final GoogleSignInAccount? newGoogleUser = await googleSignIn.signIn();
+  if (newGoogleUser == null) {
+    return null; // The user canceled the sign-in process
+  }
+
+  final GoogleSignInAuthentication googleAuth =
+      await newGoogleUser.authentication;
+
+  final OAuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,6 +226,9 @@ class _AnimatedPhoneEntryPageState extends State<AnimatedPhoneEntryPage> {
               ),
             ),
             const SizedBox(height: 20),
+           
+              
+            const SizedBox(height: 10),
             Row(
               children: [
                 CountryCodePicker(
@@ -209,7 +244,7 @@ class _AnimatedPhoneEntryPageState extends State<AnimatedPhoneEntryPage> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: TextFormField(
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
@@ -233,7 +268,7 @@ class _AnimatedPhoneEntryPageState extends State<AnimatedPhoneEntryPage> {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: const EdgeInsets.all(10.0),
               child: InkWell(
                 onTap: _isLoading
                     ? null
@@ -323,15 +358,58 @@ class _AnimatedPhoneEntryPageState extends State<AnimatedPhoneEntryPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+              Divider(
+                color: Colors.grey.shade400,
+                thickness: 0.7,
+                indent: 20,
+                endIndent: 20,
+              ),
+               const SizedBox(height: 1),
+               Text("Otherwise", style: TextStyle(color: Colors.grey.shade600)),
+               const SizedBox(height: 40),
+             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+              child: InkWell(
+                onTap: _isLoading ? null : signInWithGoogle,
+                borderRadius: BorderRadius.circular(30),
+                splashColor: const Color.fromARGB(255, 203, 212, 227).withOpacity(0.2),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    color: Colors.black, // Google button color
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Image(
+                          image: AssetImage('assets/google.png'), // Replace with your Google logo asset path
+                          height: 20,
+                          width: 20,
+                        ),
+                        
+                        SizedBox(width: 10),
+                        Text(
+                          "Continue with Google",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  void _showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
-    );
-  }
+  
 }
