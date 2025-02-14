@@ -1,3 +1,4 @@
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -11,7 +12,7 @@ class DeliveryTrackingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Track Your Delivery'),
+        title: Text(AppLocalizations.of(context)!.trackYourDelivery),
         backgroundColor: Colors.deepPurple,
       ),
       body: StreamBuilder<DocumentSnapshot>(
@@ -25,18 +26,18 @@ class DeliveryTrackingPage extends StatelessWidget {
           }
 
           if (!snapshot.hasData || !snapshot.data!.exists) {
-            return const Center(child: Text('No delivery details available.'));
+            return Center(child: Text(AppLocalizations.of(context)!.noDeliveryDetails));
           }
 
           final data = snapshot.data!.data() as Map<String, dynamic>;
           final List<String> statuses = [
-            "Order Placed",
-            "Waiting for Partner",
-            "Partner Accepted",
-            "Food Picked Up from Donor",
-            "Out for Delivery",
-            "Delivery in Progress",
-            "Delivered!",
+            AppLocalizations.of(context)!.orderPlaced,
+            AppLocalizations.of(context)!.waitingForPartner,
+            AppLocalizations.of(context)!.partnerAccepted,
+            AppLocalizations.of(context)!.foodPickedUp,
+            AppLocalizations.of(context)!.outForDelivery,
+            AppLocalizations.of(context)!.deliveryInProgressStatus,
+            AppLocalizations.of(context)!.delivered,
           ];
           final currentStatus = data['status'] ?? "Order Placed";
           final currentIndex = statuses.indexOf(currentStatus);
@@ -46,9 +47,9 @@ class DeliveryTrackingPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Delivery Status",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                Text(
+                  AppLocalizations.of(context)!.deliveryStatus,
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 Expanded(
@@ -120,7 +121,7 @@ class DeliveryTrackingPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                   ),
-                  child: const Text("Contact Delivery Partner"),
+                  child: Text(AppLocalizations.of(context)!.contactDeliveryPartner),
                 ),
               ],
             ),

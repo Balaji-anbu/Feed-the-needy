@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -73,18 +74,18 @@ class OnboardingPage1 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/Animation2.json', height: 300, width: 300),
-            const Padding(
-              padding: EdgeInsets.all(1.0),
+            Padding(
+              padding: const EdgeInsets.all(1.0),
               child: Text(
-                'Welcome to FeedtheNeedy App',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                AppLocalizations.of(context)!.welcomeToApp,
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(
-                'From hotels to hearts—our app bridges the gap with food and compassion.',
+                AppLocalizations.of(context)!.welcomeMessage,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
               ),
@@ -106,13 +107,13 @@ class OnboardingPage2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/Animation4.json', height: 350, width: 350),
-            const Text(
-              'One app, countless smiles',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.appSlogan,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             Text(
-              'join us in reducing food waste and feeding those in need.',
+              AppLocalizations.of(context)!.sloganMessage,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
             ),
@@ -133,13 +134,13 @@ class OnboardingPage3 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/Animation1.json', height: 350, width: 350),
-            const Text(
-              'Get Started Today',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.getStarted,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             Text(
-              'Sign up and choose your role to contribute to the cause.',
+              AppLocalizations.of(context)!.getStartedMessage,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
             ),
@@ -198,8 +199,8 @@ Future<UserCredential?> signInWithGoogle() async {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Verification',
+        title: Text(
+          AppLocalizations.of(context)!.verification,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -212,15 +213,15 @@ Future<UserCredential?> signInWithGoogle() async {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Lottie.asset('assets/phone.json'),
-            const Text(
-              'Get Started Today',
+             Text(
+              AppLocalizations.of(context)!.getStarted,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Reduce food wastage, fight hunger, and build a world where every meal counts.',
+                AppLocalizations.of(context)!.appDescription,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
               ),
@@ -251,7 +252,7 @@ Future<UserCredential?> signInWithGoogle() async {
                       maxLength: 10,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        hintText: 'Enter Phone Number',
+                        hintText: AppLocalizations.of(context)!.enterPhoneNumber,
                         counterText: '',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -276,8 +277,7 @@ Future<UserCredential?> signInWithGoogle() async {
                         final phoneNumber =
                             _selectedCountryCode + _phoneController.text.trim();
                         if (phoneNumber.isEmpty) {
-                          _showSnackBar(
-                              context, "Phone number cannot be empty");
+                          _showSnackBar(context, AppLocalizations.of(context)!.phoneNumberRequired);
                           return;
                         }
                         setState(() {
@@ -303,8 +303,7 @@ Future<UserCredential?> signInWithGoogle() async {
                               });
                             },
                             verificationFailed: (FirebaseAuthException e) {
-                              _showSnackBar(
-                                  context, "Verification failed: ${e.message}");
+                              _showSnackBar(context, "${AppLocalizations.of(context)!.verificationFailed}: ${e.message}");
                               setState(() {
                                 _isLoading = false;
                               });
@@ -366,7 +365,9 @@ Future<UserCredential?> signInWithGoogle() async {
                 endIndent: 20,
               ),
                const SizedBox(height: 1),
-               Text("Otherwise", style: TextStyle(color: Colors.grey.shade600)),
+               Text(AppLocalizations.of(context)!.otherwise, 
+                  style: TextStyle(color: Colors.grey.shade600)
+                ),
                const SizedBox(height: 40),
              Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14.0),
@@ -384,17 +385,17 @@ Future<UserCredential?> signInWithGoogle() async {
                     alignment: Alignment.center,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Image(
+                      children: [
+                        const Image(
                           image: AssetImage('assets/google.png'), // Replace with your Google logo asset path
                           height: 20,
                           width: 20,
                         ),
                         
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
-                          "Continue with Google",
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.continueWithGoogle,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),

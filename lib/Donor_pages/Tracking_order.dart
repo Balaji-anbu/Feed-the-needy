@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously
 
 import 'package:feed_the_needy/Donor_pages/Donor_request_tracking.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,9 +42,9 @@ class _DonorTrackPageState extends State<DonorTrackPage>
               labelColor: Colors.lightGreenAccent,
               unselectedLabelColor: Colors.white,
               indicatorColor: Colors.white,
-              tabs: const [
-                Tab(icon: Icon(Icons.fastfood), text: 'Uploaded Food'),
-                Tab(icon: Icon(Icons.receipt), text: 'Requests'),
+              tabs: [
+                Tab(icon: const Icon(Icons.fastfood), text: AppLocalizations.of(context)!.uploadFoodDetails),
+                Tab(icon: const Icon(Icons.receipt), text: AppLocalizations.of(context)!.requestDetails),
               ],
             ),
           ),
@@ -83,7 +84,7 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
   Future<void> _getUploadedFood() async {
     if (_currentUser == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("User not authenticated!")));
+          SnackBar(content: Text(AppLocalizations.of(context)!.userNotAuthenticated)));
       return;
     }
 
@@ -122,61 +123,52 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Center(
-                      child: Text(
-                    'Uploaded Food Detail',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                  )),
-                  SizedBox(
-                    height: 20,
+                  Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.uploadedFoodDetail,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                    ),
                   ),
+                  const SizedBox(height: 20),
                   Text(
-                    "Food ID: ${food['food_id']}",
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.foodId(food['food_id']),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  Divider(
-                    thickness: 0.5,
-                  ),
+                  const Divider(thickness: 0.5),
                   Text(
-                    "Food Name: ${food['food_name']}",
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.foodName,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  Text("Description: ${food['description']}",
-                      style: const TextStyle(fontSize: 18)),
-                  const SizedBox(height: 10),
-                  Text("Servings: ${food['servings']}",
-                      style: const TextStyle(fontSize: 18)),
-                  const SizedBox(height: 10),
-                  Divider(
-                    thickness: 0.5,
+                  Text(
+                    AppLocalizations.of(context)!.descriptionHint,
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  Text("Food Type: ${food['food_type']}",
+                  const SizedBox(height: 10),
+                  Text(AppLocalizations.of(context)!.servingsCount(food['servings']),
                       style: const TextStyle(fontSize: 18)),
                   const SizedBox(height: 10),
-                  Text("Package Type: ${food['packaging_type']}",
+                  const Divider(thickness: 0.5),
+                  Text(AppLocalizations.of(context)!.foodType,
                       style: const TextStyle(fontSize: 18)),
                   const SizedBox(height: 10),
-                  Text("Food Category: ${food['food_category']}",
+                  Text(AppLocalizations.of(context)!.packagingType,
                       style: const TextStyle(fontSize: 18)),
                   const SizedBox(height: 10),
-                  Text("Food Condition: ${food['food_condition']}",
+                  Text(AppLocalizations.of(context)!.foodCategory,
                       style: const TextStyle(fontSize: 18)),
                   const SizedBox(height: 10),
-                  Divider(
-                    thickness: 0.5,
-                  ),
-                  Text("Cooked At: ${food['cooked_at'].toDate()}",
+                  Text(AppLocalizations.of(context)!.foodCondition,
                       style: const TextStyle(fontSize: 18)),
                   const SizedBox(height: 10),
-                  Text("Uploaded At: ${food['created_at'].toDate()}",
+                  const Divider(thickness: 0.5),
+                  Text(AppLocalizations.of(context)!.cookedAt(food['cooked_at'].toDate()),
+                      style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 10),
+                  Text(AppLocalizations.of(context)!.uploadedAtLabel(food['created_at'].toDate()),
                       style: const TextStyle(fontSize: 18)),
                   const SizedBox(height: 20),
-                  Divider(
-                    thickness: 0.5,
-                  ),
+                  const Divider(thickness: 0.5),
                   Image.asset(
                     'assets/food1.webp', // Replace with actual image URL or shuffled logic
                     height: 280,
@@ -190,7 +182,7 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Status: ${food['status']}",
+                          AppLocalizations.of(context)!.statusLabel(food['status']),
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -199,8 +191,7 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                                 : (food['status'] == 'unavailable' ||
                                         food['status'] == 'deleted')
                                     ? Colors.red
-                                    : Colors
-                                        .black, // Default color for other statuses
+                                    : Colors.black, // Default color for other statuses
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -210,17 +201,15 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                String?
-                                    selectedReason; // To store the selected reason
+                                String? selectedReason; // To store the selected reason
                                 return AlertDialog(
-                                  title:
-                                      const Text('Select Reason for Deletion'),
+                                  title: Text(AppLocalizations.of(context)!.selectDeletionReason),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       RadioListTile<String>(
-                                        title: const Text('Food Distributed'),
-                                        value: 'Food Distributed',
+                                        title: Text(AppLocalizations.of(context)!.foodDistributed),
+                                        value: AppLocalizations.of(context)!.foodDistributed,
                                         groupValue: selectedReason,
                                         onChanged: (value) {
                                           selectedReason = value;
@@ -228,8 +217,8 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                                         },
                                       ),
                                       RadioListTile<String>(
-                                        title: const Text('Food Spoiled'),
-                                        value: 'Food Spoiled',
+                                        title: Text(AppLocalizations.of(context)!.foodSpoiled),
+                                        value: AppLocalizations.of(context)!.foodSpoiled,
                                         groupValue: selectedReason,
                                         onChanged: (value) {
                                           selectedReason = value;
@@ -237,8 +226,8 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                                         },
                                       ),
                                       RadioListTile<String>(
-                                        title: const Text('Not Available'),
-                                        value: 'Not Available',
+                                        title: Text(AppLocalizations.of(context)!.notAvailable),
+                                        value: AppLocalizations.of(context)!.notAvailable,
                                         groupValue: selectedReason,
                                         onChanged: (value) {
                                           selectedReason = value;
@@ -246,8 +235,8 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                                         },
                                       ),
                                       RadioListTile<String>(
-                                        title: const Text('Others'),
-                                        value: 'Others',
+                                        title: Text(AppLocalizations.of(context)!.others),
+                                        value: AppLocalizations.of(context)!.others,
                                         groupValue: selectedReason,
                                         onChanged: (value) {
                                           selectedReason = value;
@@ -262,25 +251,20 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                               if (reason != null) {
                                 // Proceed with deletion if a reason is selected
                                 await FirebaseFirestore.instance
-                                    .collection(
-                                        'food_available') // Replace with your food collection name
-                                    .doc(food[
-                                        'food_id']) // Replace with the document ID
+                                    .collection('food_available') // Replace with your food collection name
+                                    .doc(food['food_id']) // Replace with the document ID
                                     .update({
                                   'status': 'unavailable',
-                                  'reason_of_deletion':
-                                      reason, // Store reason of deletion
+                                  'reason_of_deletion': reason, // Store reason of deletion
                                 });
 
                                 // Move the food to a separate collection for deleted food
                                 await FirebaseFirestore.instance
-                                    .collection(
-                                        'deleted_food') // New collection for deleted food
+                                    .collection('deleted_food') // New collection for deleted food
                                     .doc(food['food_id'])
                                     .set({
                                   ...food,
-                                  'reason_of_deletion':
-                                      reason, // Add the reason here
+                                  'reason_of_deletion': reason, // Add the reason here
                                 });
 
                                 // Delete the food from the main collection
@@ -290,26 +274,20 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                                     .delete();
 
                                 // Find and delete related document in the 'food_request' collection
-                                final querySnapshot = await FirebaseFirestore
-                                    .instance
-                                    .collection(
-                                        'food_requests') // Replace with your food_request collection name
-                                    .where('food_id',
-                                        isEqualTo: food[
-                                            'food_id']) // Match the food_id
+                                final querySnapshot = await FirebaseFirestore.instance
+                                    .collection('food_requests') // Replace with your food_request collection name
+                                    .where('food_id', isEqualTo: food['food_id']) // Match the food_id
                                     .get();
 
                                 for (var doc in querySnapshot.docs) {
-                                  await doc.reference
-                                      .delete(); // Delete each matching document
+                                  await doc.reference.delete(); // Delete each matching document
                                 }
 
                                 // Show confirmation message
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.orange,
-                                    content: Text(
-                                        'Food item and related requests deleted successfully!'),
+                                    content: Text(AppLocalizations.of(context)!.foodDeletedSuccess),
                                   ),
                                 );
                               } else {
@@ -317,23 +295,21 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.red,
-                                    content: Text(
-                                        'Deletion canceled: No reason selected.'),
+                                    content: Text(AppLocalizations.of(context)!.selectDeletionReason),
                                   ),
                                 );
                               }
                             });
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Text(
-                              "Delete Food",
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.deleteFood,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -361,9 +337,9 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/loading.json', width: 150, height: 150),
-            const Text(
-              'Loading your uploaded food...',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.loadingUploadedFood,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -371,7 +347,7 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
     }
 
     return _uploadedFood.isEmpty
-        ? const Center(child: Text('No food uploaded yet'))
+        ? Center(child: Text(AppLocalizations.of(context)!.noFoodUploaded))
         : ListView.builder(
             itemCount: _uploadedFood.length,
             itemBuilder: (context, index) {
@@ -411,21 +387,20 @@ class _UploadedFoodPageState extends State<UploadedFoodPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Food Name: ${food['food_name']}",
+                                  AppLocalizations.of(context)!.foodName,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 6),
-                                Text("Status: ${food['status']}"),
+                                Text(AppLocalizations.of(context)!.statusLabel(food['status'])),
                                 const SizedBox(height: 6),
-                                Text("Servings: ${food['servings']}"),
+                                Text(AppLocalizations.of(context)!.servingsCount(food['servings'])),
                                 const SizedBox(height: 6),
-                                Text("Food Type: ${food['food_type']}"),
+                                Text(AppLocalizations.of(context)!.foodType),
                                 const SizedBox(height: 6),
-                                Text(
-                                    "Uploaded At: ${food['created_at'].toDate()}"),
+                                Text(AppLocalizations.of(context)!.uploadedAtLabel(food['created_at'].toDate())),
                               ],
                             ),
                           ),

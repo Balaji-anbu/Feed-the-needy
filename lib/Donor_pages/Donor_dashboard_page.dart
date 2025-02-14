@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, prefer_const_constructors, use_super_parameters, avoid_print
 
 import 'package:feed_the_needy/components/profile_percentCard.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,16 +63,7 @@ class _DonorDashboardPageState extends State<DonorDashboardPage> {
 
         if (userDoc.exists) {
           Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-          isProfileComplete = data['name'] != null &&
-              data['organisationType'] != null &&
-              data['organisationName'] != null &&
-              data['doorNo'] != null &&
-              data['street'] != null &&
-              data['nearWhere'] != null &&
-              data['city'] != null &&
-              data['district'] != null &&
-              data['pincode'] != null &&
-              data['emailId'] != null;
+          isProfileComplete = data['name'] != null && data['emailId'] != null;
         }
       }
     } catch (e) {
@@ -118,21 +110,23 @@ class _DonorDashboardPageState extends State<DonorDashboardPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   StatsCard(
-                      title: 'Total Food Uploads',
+                      title: AppLocalizations.of(context)!.totalFoodUploads,
                       value: totalFoodUploads.toString()),
                   StatsCard(
-                      title: 'Total Served', value: totalServings.toString()),
+                      title: AppLocalizations.of(context)!.totalServed,
+                      value: totalServings.toString()),
                   StatsCard(
-                      title: 'People Fed', value: totalPeopleFed.toString()),
+                      title: AppLocalizations.of(context)!.peopleFed,
+                      value: totalPeopleFed.toString()),
                   StatsCard(
-                      title: 'Homes/Trusts Fed',
+                      title: AppLocalizations.of(context)!.homesTrustsFed,
                       value: totalHomesFed.toString()),
                 ],
               ),
               const SizedBox(height: 16),
 
-              const Text(
-                'Why Feed the Needy?',
+              Text(
+                AppLocalizations.of(context)!.whyFeedNeedy,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -140,8 +134,8 @@ class _DonorDashboardPageState extends State<DonorDashboardPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Feeding the needy is an act of kindness and generosity that helps ensure no one goes hungry. It not only nourishes those who are struggling but also contributes to a more compassionate and caring society. When we share what we have, we make the world a better place for everyone.',
+              Text(
+                AppLocalizations.of(context)!.feedNeedyDescription,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black87,
@@ -149,43 +143,36 @@ class _DonorDashboardPageState extends State<DonorDashboardPage> {
               ),
               const SizedBox(height: 16),
 
-              // List of captions or key points
-              const Text(
-                '• Ensures no one goes hungry.\n'
-                '• Reduces food waste.\n'
-                '• Builds a compassionate community.\n'
-                '• Provides a sense of hope and dignity.\n'
-                '• Helps create sustainable food systems.',
+              Text(
+                AppLocalizations.of(context)!.feedNeedyKeyPoints,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black87,
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              // Active Listings Section
-              const Text(
-                'Active Listings',
+              const SizedBox(height: 20),
+              
+              Text(
+                AppLocalizations.of(context)!.activeListings,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
+                children: [
                   FoodListingCard(
                       title: 'Pasta',
-                      status: 'Pending Requests',
-                      date: 'Dec 15'),
+                      status: AppLocalizations.of(context)!.pendingRequests,
+                      date: AppLocalizations.of(context)!.listingDate( '15')),
                   FoodListingCard(
                       title: 'Sandwiches',
-                      status: 'Delivery In Progress',
-                      date: 'Dec 14'),
+                      status: AppLocalizations.of(context)!.deliveryInProgress,
+                      date: AppLocalizations.of(context)!.listingDate( '14')),
                   FoodListingCard(
                       title: 'Rice and Curry',
-                      status: 'Pending Approval',
-                      date: 'Dec 13'),
+                      status: AppLocalizations.of(context)!.pendingApproval,
+                      date: AppLocalizations.of(context)!.listingDate('13')),
                 ],
               ),
             ],

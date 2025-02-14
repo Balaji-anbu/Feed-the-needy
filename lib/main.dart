@@ -1,14 +1,14 @@
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:feed_the_needy/pages/role_selection.dart';
-import 'package:feed_the_needy/Delivery_parntner/delivery_partner_home.dart';
+import 'package:feed_the_needy/Delivery_parntner/delivery_partnerHome.dart';
 import 'package:feed_the_needy/Donor_pages/donar_home.dart';
 import 'package:feed_the_needy/Needer_pages/needer_home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';

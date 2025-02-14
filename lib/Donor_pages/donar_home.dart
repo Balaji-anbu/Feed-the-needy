@@ -2,11 +2,11 @@
 
 import 'package:feed_the_needy/Donor_pages/Donor_main.dart';
 import 'package:feed_the_needy/Donor_pages/Donor_profile.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/pages/Language_selection.dart';
 import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeFoodDonor extends StatelessWidget {
@@ -74,10 +74,9 @@ class HomeFoodDonor extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Hey!',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                        Text(
+                          AppLocalizations.of(context)!.hey,
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           phoneNumber,
@@ -93,8 +92,8 @@ class HomeFoodDonor extends StatelessWidget {
                                   builder: (context) => DonorProfilePage()),
                             );
                           },
-                          child: const Text(
-                            'My Profile',
+                          child: Text(
+                            AppLocalizations.of(context)!.myProfile,
                             style: TextStyle(color: Colors.blue, fontSize: 18),
                           ),
                         )
@@ -136,7 +135,7 @@ class HomeFoodDonor extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'App Version 1.0.0',
+                AppLocalizations.of(context)!.appVersion('1.0.0'),
                 style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
               ),
             )
@@ -156,7 +155,38 @@ class HomeFoodDonor extends StatelessWidget {
         style: TextStyle(
             color: isLogout ? Colors.red : Colors.black, fontSize: 14),
       ),
-      onTap: onTap,
+      onTap: isLogout
+          ? () {
+              // Show confirmation dialog for logout
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text(AppLocalizations.of(context)!.confirmSignOut),
+                    content: Text(AppLocalizations.of(context)!.signOutConfirmation),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text(AppLocalizations.of(context)!.cancel),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          onTap(); // Perform the actual sign-out
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.signOutButton,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          : onTap,
     );
   }
 }

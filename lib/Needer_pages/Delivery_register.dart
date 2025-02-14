@@ -1,3 +1,4 @@
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/services/push_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -88,13 +89,12 @@ class _DoorDeliveryPageState extends State<DoorDeliveryPage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Delivery Details Submitted!")),
+          SnackBar(content: Text(AppLocalizations.of(context)!.deliveryDetailsSubmitted)),
         );
 
         await sendPushNotification(
-          title: "New Order Available!",
-          message:
-              "Hurry! Start Finding ur Way Because Someone is waiting for You!",
+          title: AppLocalizations.of(context)!.newOrderAvailable,
+          message: AppLocalizations.of(context)!.startFindingWay,
           targetTag: "Delivery Partner",
         );
 
@@ -113,7 +113,7 @@ class _DoorDeliveryPageState extends State<DoorDeliveryPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 98, 115, 213),
       appBar: AppBar(
-        title: const Text("Door Delivery Details"),
+        title: Text(AppLocalizations.of(context)!.doorDeliveryDetails),
         backgroundColor: const Color.fromARGB(255, 133, 88, 210),
         elevation: 0,
       ),
@@ -125,53 +125,53 @@ class _DoorDeliveryPageState extends State<DoorDeliveryPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Basic Details",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                Text(
+                  AppLocalizations.of(context)!.basicDetails,
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
-                  "Recipient Name",
-                  "Enter recipient name",
+                  AppLocalizations.of(context)!.recipientName,
+                  AppLocalizations.of(context)!.enterRecipientName,
                   key: "recipient_name",
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
-                  "Recipient Phone Number",
-                  "Enter recipient phone number",
+                  AppLocalizations.of(context)!.recipientPhoneNumber,
+                  AppLocalizations.of(context)!.enterPhoneNumber,
                   keyboardType: TextInputType.phone,
                   key: "recipient_phone",
                 ),
                 const SizedBox(height: 16),
                 _buildTextField(
-                  "Email ID",
-                  "Enter email ID",
+                  AppLocalizations.of(context)!.emailId,
+                  AppLocalizations.of(context)!.enterEmailId,
                   keyboardType: TextInputType.emailAddress,
                   key: "email_id",
                 ),
                 const SizedBox(height: 32),
-                const Text(
-                  "Address Details",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                Text(
+                  AppLocalizations.of(context)!.addressDetails,
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 const SizedBox(height: 16),
-                _buildTextField("Door No.", "Enter door number",
+                _buildTextField(AppLocalizations.of(context)!.doorNo, AppLocalizations.of(context)!.enterDoorNumber,
                     key: "door_no"),
                 const SizedBox(height: 16),
-                _buildTextField("Street", "Enter street", key: "street"),
+                _buildTextField(AppLocalizations.of(context)!.street, AppLocalizations.of(context)!.enterStreet, key: "street"),
                 const SizedBox(height: 16),
-                _buildTextField("City", "Enter city", key: "city"),
+                _buildTextField(AppLocalizations.of(context)!.city, AppLocalizations.of(context)!.enterCity, key: "city"),
                 const SizedBox(height: 16),
-                _buildTextField("Pin Code", "Enter pin code",
+                _buildTextField(AppLocalizations.of(context)!.pincode, AppLocalizations.of(context)!.enterPinCode,
                     keyboardType: TextInputType.number, key: "pin_code"),
                 const SizedBox(height: 32),
-                const Text(
-                  "Payment Details",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                Text(
+                  AppLocalizations.of(context)!.paymentDetails,
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  "Delivery Charge: ₹$_deliveryCharge",
+                  AppLocalizations.of(context)!.deliveryChargeAmount(_deliveryCharge).replaceAll('{amount}', _deliveryCharge.toString()),
                   style: const TextStyle(color: Colors.white70, fontSize: 16),
                 ),
                 const SizedBox(height: 16),
@@ -209,7 +209,7 @@ class _DoorDeliveryPageState extends State<DoorDeliveryPage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40.0, vertical: 12.0),
                     ),
-                    child: const Text("Submit Details"),
+                    child: Text(AppLocalizations.of(context)!.submitDetails),
                   ),
                 ),
               ],

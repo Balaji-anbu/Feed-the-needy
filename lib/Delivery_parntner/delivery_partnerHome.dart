@@ -1,13 +1,13 @@
 import 'package:feed_the_needy/Delivery_parntner/Current_delivery.dart';
 import 'package:feed_the_needy/Delivery_parntner/Available_orders.dart';
+import 'package:feed_the_needy/Delivery_parntner/Partner_dash.dart';
 import 'package:feed_the_needy/Delivery_parntner/completed_orders.dart';
-import 'package:feed_the_needy/Delivery_parntner/partner_dashBoard.dart';
 import 'package:feed_the_needy/Delivery_parntner/partner_profile.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/pages/Language_selection.dart';
 import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DeliveryPartnerHome extends StatefulWidget {
@@ -66,7 +66,8 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
     } catch (e) {
       // Handle any errors, such as if the delivery data is not found
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching delivery data: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.errorFetchingDeliveryData
+            (e.toString()))),
       );
     }
   }
@@ -77,9 +78,8 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          "Delivery Partner Dashboard",
-          style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          AppLocalizations.of(context)!.deliveryPartnerTitle,
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
         actions: [
@@ -126,7 +126,7 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.done_all_outlined),
-            label: "Finished",
+            label: AppLocalizations.of(context)!.finished,
           ),
         ],
       ),
@@ -166,10 +166,9 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Hey!',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                        Text(
+                          AppLocalizations.of(context)!.hey,
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           phoneNumber,
@@ -186,8 +185,8 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
                                       const DeliveryPartnerProfilePage()),
                             );
                           },
-                          child: const Text(
-                            'My Profile',
+                          child: Text(
+                            AppLocalizations.of(context)!.myProfile,
                             style: TextStyle(color: Colors.blue, fontSize: 18),
                           ),
                         )
@@ -201,7 +200,7 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
             _buildDrawerItem(
               context,
               Icons.list_alt,
-              'View Delivery Details',
+              AppLocalizations.of(context)!.viewDeliveryDetails,
               () => navigateToDeliveryDetails('yourDeliveryIdHere'),
             ),
             _buildDrawerItem(context, Icons.history,
@@ -236,7 +235,7 @@ class _DeliveryPartnerHomeState extends State<DeliveryPartnerHome> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'App Version 1.0.0',
+                AppLocalizations.of(context)!.appVersion( '1.0.0'),
                 style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
               ),
             )

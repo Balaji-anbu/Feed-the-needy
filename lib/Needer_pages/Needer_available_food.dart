@@ -1,4 +1,5 @@
 import 'package:feed_the_needy/Needer_pages/Needer_profile_page.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/services/push_notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -184,9 +185,9 @@ class _AvailableFoodPageState extends State<AvailableFoodPage> {
                       });
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                      'Clear Filters',
-                      style: TextStyle(color: Colors.red),
+                    child: Text(
+                      AppLocalizations.of(context)!.clearFilters,
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
                   InkWell(
@@ -201,9 +202,9 @@ class _AvailableFoodPageState extends State<AvailableFoodPage> {
 
                       padding: const EdgeInsets.all(
                           12.0), // Add some padding for better touch target
-                      child: const Text(
-                        'Apply Filters',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.applyFilters,
+                        style: const TextStyle(
                           fontSize: 16.0,
                           color:
                               Colors.white, // Example: Customize the text color
@@ -397,12 +398,12 @@ class _AvailableFoodPageState extends State<AvailableFoodPage> {
         docId: foodData['donor_id'],
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Request sent successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.requestSentSuccess)),
       );
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error sending request: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.errorSendingRequest(e.toString()))),
       );
     }
   }
@@ -708,7 +709,7 @@ class _AvailableFoodPageState extends State<AvailableFoodPage> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search food...',
+                      hintText: AppLocalizations.of(context)!.availableFoodSearch,
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),

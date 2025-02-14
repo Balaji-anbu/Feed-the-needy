@@ -2,11 +2,11 @@
 
 import 'package:feed_the_needy/Needer_pages/Needer_food_request.dart';
 import 'package:feed_the_needy/Needer_pages/Needer_profile_page.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/pages/Language_selection.dart';
 import 'package:feed_the_needy/pages/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeFoodNeeder extends StatelessWidget {
   const HomeFoodNeeder({super.key});
@@ -27,8 +27,8 @@ class HomeFoodNeeder extends StatelessWidget {
             ],
             tileMode: TileMode.mirror,
           ).createShader(bounds),
-          child: const Text(
-            'Welcome! Home',
+          child: Text(
+            AppLocalizations.of(context)!.welcomeNeeder,
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
           ),
@@ -100,8 +100,8 @@ class HomeFoodNeeder extends StatelessWidget {
                                         const NeederProfilePage()),
                               );
                             },
-                            child: const Text(
-                              'My Profile',
+                            child: Text(
+                              AppLocalizations.of(context)!.myProfile,
                               style:
                                   TextStyle(color: Colors.blue, fontSize: 16),
                             ),
@@ -185,9 +185,9 @@ class HomeFoodNeeder extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ).createShader(bounds),
-                  child: const Text(
-                    'App Version 1.0.0',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.appVersionText,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -195,9 +195,9 @@ class HomeFoodNeeder extends StatelessWidget {
                   ),
                 ),
               ),
-              const Text(
-                'Copyright© 2024 Feed The Needy',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.copyrightText,
+                style: const TextStyle(
                   fontSize: 12,
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
@@ -218,11 +218,40 @@ class HomeFoodNeeder extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: isLogout ? Colors.red : Colors.black,
-          fontSize: 14,
-        ),
+            color: isLogout ? Colors.red : Colors.black, fontSize: 14),
       ),
-      onTap: onTap,
+      onTap: isLogout
+          ? () {
+              // Show confirmation dialog for logout
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirm Sign Out'),
+                    content: Text('Are you sure you want to sign out?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          onTap(); // Perform the actual sign-out
+                        },
+                        child: Text(
+                          'Sign Out',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          : onTap,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +18,7 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
       User? currentUser = _auth.currentUser;
       if (currentUser == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please log in first')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.pleaseLoginFirst)),
         );
         return;
       }
@@ -30,7 +31,7 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
 
       if (activeDeliveries.docs.isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('You already have an active delivery')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.activeDeliveryExists)),
         );
         return;
       }
@@ -50,11 +51,11 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Order Accepted Successfully')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.orderAcceptedSuccess)),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error accepting order: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.errorAcceptingOrder(e.toString()))),
       );
     }
   }
@@ -65,11 +66,11 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
       await _firestore.collection('home_delivery').doc(order.id).delete();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Order Rejected')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.orderRejected)),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error rejecting order: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.errorRejectingOrder(e.toString()))),
       );
     }
   }
@@ -90,10 +91,11 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return Center(child: Column(
-              children: [SizedBox(height: 100),
+              children: [
+                SizedBox(height: 100),
                 Icon(Icons.info, size: 100, color: Colors.grey),
                 SizedBox(height: 50),
-                Text('No available orders'),
+                Text(AppLocalizations.of(context)!.noAvailableOrders),
               ],
             ));
           }
@@ -107,14 +109,14 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
               return Card(
                 margin: EdgeInsets.all(8),
                 child: ListTile(tileColor: Colors.lightBlueAccent,
-                  title: Text('Delivery Id: ${orderData['delivery_id']}'),
+                  title: Text(AppLocalizations.of(context)!.deliveryIdLabel(orderData['delivery_id'])),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Location: ${orderData['city'] ?? 'N/A'}'),
-                      Text('Recipient Name: ${orderData['recipient_name'] ?? 'N/A'}'),
-                      Text('Quantity: ${orderData['servings'] ?? 'N/A'}'),
-                      Text('Current Status: ${orderData['status'] ?? 'N/A'}'),
+                      Text(AppLocalizations.of(context)!.locationLabel(orderData['city'] ?? 'N/A')),
+                      Text(AppLocalizations.of(context)!.recipientNameLabel(orderData['recipient_name'] ?? 'N/A')),
+                      Text(AppLocalizations.of(context)!.quantityLabel(orderData['servings'] ?? 'N/A')),
+                      Text(AppLocalizations.of(context)!.currentStatusLabel(orderData['status'] ?? 'N/A')),
                     ],
                   ),
                   onTap: () {
@@ -129,24 +131,33 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Delivery Id: ${orderData['delivery_id']}', style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                              Text(AppLocalizations.of(context)!.deliveryIdLabel(orderData['delivery_id']), 
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                               SizedBox(height: 8),
-                              Text('Location: ${orderData['city'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                              Text('Recipient Name: ${orderData['recipient_name'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                              Text('Quantity: ${orderData['servings'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                              Divider(thickness: 0.5,),
-                             
-                              Text('Door No: ${orderData['door_no'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                              Text('Street Name: ${orderData['street'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                              
-                              Text('City: ${orderData['city'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                               Text('Pincode : ${orderData['pin_code'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                               Text('Payment Mode: ${orderData['payment_method'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                               Text('delivery charge: ${orderData['delivery_charge'] ?? 'N/A'}',
-                            style: TextStyle(fontSize: 17)),
-                               Divider(thickness: 0.5,),
-                              Text('Recipient phone: ${orderData['recipient_phone'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
-                               Text('Recipient Email: ${orderData['email_id'] ?? 'N/A'}',style: TextStyle(fontSize: 16),),
+                              Text(AppLocalizations.of(context)!.locationLabel(orderData['city'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.recipientNameLabel(orderData['recipient_name'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.quantityLabel(orderData['servings'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Divider(thickness: 0.5),
+                              Text(AppLocalizations.of(context)!.doorNoLabel(orderData['door_no'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.streetNameLabel(orderData['street'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.cityLabel(orderData['city'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.pincodeLabel(orderData['pin_code'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.paymentModeLabel(orderData['payment_method'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.deliveryChargeLabel(orderData['delivery_charge'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 17)),
+                              Divider(thickness: 0.5),
+                              Text(AppLocalizations.of(context)!.recipientPhoneLabel(orderData['recipient_phone'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
+                              Text(AppLocalizations.of(context)!.recipientEmailLabel(orderData['email_id'] ?? 'N/A'),
+                                  style: TextStyle(fontSize: 16)),
                               SizedBox(height: 16),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -159,7 +170,8 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
                                     child: Container(
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                       color: Colors.green,
-                                      child: Text('Accept', style: TextStyle(color: Colors.white)),
+                                      child: Text(AppLocalizations.of(context)!.accept, 
+                                          style: TextStyle(color: Colors.white)),
                                     ),
                                   ),
                                   InkWell(
@@ -170,7 +182,8 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
                                     child: Container(
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                       color: Colors.red,
-                                      child: Text('Reject', style: TextStyle(color: Colors.white)),
+                                      child: Text(AppLocalizations.of(context)!.reject, 
+                                          style: TextStyle(color: Colors.white)),
                                     ),
                                   ),
                                 ],

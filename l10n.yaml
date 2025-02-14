@@ -1,3 +1,0 @@
-arb-dir: lib/l10n              # Folder where .arb files will be stored
-template-arb-file: app_en.arb  # The default template ARB file
-output-dir: lib/generated      # Directory where the generated files will be stored

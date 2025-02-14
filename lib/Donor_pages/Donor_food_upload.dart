@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/services/push_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -247,9 +248,9 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
-          title: const Text(
-            'Upload Food Details',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          title: Text(
+            AppLocalizations.of(context)!.uploadFoodDetails,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
@@ -273,7 +274,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
               _buildCard(
                 child: TextField(
                   controller: _foodNameController,
-                  decoration: const InputDecoration(labelText: 'Food Name'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.foodName),
                 ),
               ),
               _buildCard(
@@ -290,7 +291,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                       child: Text(type),
                     );
                   }).toList(),
-                  decoration: const InputDecoration(labelText: 'Food Type'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.foodType),
                 ),
               ),
               _buildCard(
@@ -307,7 +308,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                       child: Text(category),
                     );
                   }).toList(),
-                  decoration: const InputDecoration(labelText: 'Food Category'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.foodCategory),
                 ),
               ),
               _buildCard(
@@ -325,7 +326,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                     );
                   }).toList(),
                   decoration:
-                      const InputDecoration(labelText: 'Food Condition'),
+                      InputDecoration(labelText: AppLocalizations.of(context)!.foodCondition),
                 ),
               ),
               _buildCard(
@@ -343,7 +344,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                     );
                   }).toList(),
                   decoration:
-                      const InputDecoration(labelText: 'Packaging Type'),
+                      InputDecoration(labelText: AppLocalizations.of(context)!.packagingType),
                 ),
               ),
               _buildCard(
@@ -360,23 +361,23 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                       child: Text(option),
                     );
                   }).toList(),
-                  decoration: const InputDecoration(labelText: 'Serve Within'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.serveWithin),
                 ),
               ),
               _buildCard(
                 child: TextField(
                   controller: _servingsController,
                   decoration:
-                      const InputDecoration(labelText: 'Number of Servings'),
+                      InputDecoration(labelText: AppLocalizations.of(context)!.numberOfServings),
                   keyboardType: TextInputType.number,
                 ),
               ),
               _buildCard(
                 child: TextField(
                   controller: _descriptionController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       labelText:
-                          'Description(Tell about ur variety of dishes...)'),
+                          AppLocalizations.of(context)!.descriptionHint),
                   maxLines: 3,
                 ),
               ),
@@ -386,12 +387,12 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                   children: [
                     Text(
                       _cookedAt == null
-                          ? 'When was the food cooked?'
-                          : 'Cooked At: ${DateFormat.yMMMd().add_jm().format(_cookedAt!)}',
+                          ? AppLocalizations.of(context)!.whenCooked
+                          : AppLocalizations.of(context)!.cookedAt(DateFormat.yMMMd().add_jm().format(_cookedAt!)),
                     ),
                     TextButton(
                       onPressed: _pickDateTime,
-                      child: const Text('Pick Date & Time'),
+                      child: Text(AppLocalizations.of(context)!.pickDateTime),
                     ),
                   ],
                 ),
@@ -409,7 +410,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                         });
                       },
                     ),
-                    const Expanded(child: Text('Use current GPS address')),
+                    Expanded(child: Text(AppLocalizations.of(context)!.useCurrentGPS)),
                     Radio<String>(
                       value: 'manual',
                       groupValue: _addressOption,
@@ -419,7 +420,7 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                         });
                       },
                     ),
-                    const Expanded(child: Text('Enter manual address')),
+                    Expanded(child: Text(AppLocalizations.of(context)!.enterManualAddress)),
                   ],
                 ),
               ), // Display the InkWell button to fetch GPS only if the "current" address option is selected
@@ -441,14 +442,14 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
 
                       if (_gpsFetched) {
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text('GPS location fetched'),
+                            .showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)!.gpsLocationFetched),
                           backgroundColor: Colors.green,
                         ));
                       } else {
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text('Failed to fetch GPS'),
+                            .showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)!.gpsFetchFailed),
                           backgroundColor: Colors.red,
                         ));
                       }
@@ -467,9 +468,9 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.black),
                             )
-                          : const Text(
-                              'Fetch Current GPS',
-                              style: TextStyle(
+                          : Text(
+                              AppLocalizations.of(context)!.fetchCurrentGPS,
+                              style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white, // Text color
@@ -481,12 +482,12 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
               ],
               if (_gpsFetched) ...[
                 _buildCard(
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.safety_check),
+                      const Icon(Icons.safety_check),
                       Text(
-                        'GPS location fetched successfully!',
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.gpsLocationFetched,
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
@@ -501,37 +502,37 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                 _buildCard(
                   child: TextField(
                     controller: _doorNoController,
-                    decoration: const InputDecoration(labelText: 'Door No'),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.doorNumber),
                   ),
                 ),
                 _buildCard(
                   child: TextField(
                     controller: _streetController,
-                    decoration: const InputDecoration(labelText: 'Street'),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.street),
                   ),
                 ),
                 _buildCard(
                   child: TextField(
                     controller: _nearWhereController,
-                    decoration: const InputDecoration(labelText: 'Near Where'),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.nearWhere),
                   ),
                 ),
                 _buildCard(
                   child: TextField(
                     controller: _cityController,
-                    decoration: const InputDecoration(labelText: 'City'),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.city),
                   ),
                 ),
                 _buildCard(
                   child: TextField(
                     controller: _districtController,
-                    decoration: const InputDecoration(labelText: 'District'),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.district),
                   ),
                 ),
                 _buildCard(
                   child: TextField(
                     controller: _pincodeController,
-                    decoration: const InputDecoration(labelText: 'Pincode'),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.pincode),
                   ),
                 ),
               ],
@@ -546,9 +547,9 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                         });
                       },
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'I confirm that the food is hygienic, safe to eat, and follows the NGO\'s donation guidelines.',
+                        AppLocalizations.of(context)!.foodGuidelinesConfirmation,
                       ),
                     ),
                   ],
@@ -561,14 +562,14 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                       await _fetchCurrentLocation();
                       if (_gpsFetched) {
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text('GPS location fetched'),
+                            .showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)!.gpsLocationFetched),
                           backgroundColor: Colors.green,
                         ));
                       } else {
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text('Failed to fetch GPS'),
+                            .showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)!.gpsFetchFailed),
                           backgroundColor: Colors.red,
                         ));
                       }
@@ -599,9 +600,9 @@ class _DonorUploadPageState extends State<DonorUploadPage> {
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             )
-                          : const Text(
-                              'Upload Food',
-                              style: TextStyle(
+                          : Text(
+                              AppLocalizations.of(context)!.uploadFood,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white, // Text color

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors, use_super_parameters, avoid_print
 
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -103,13 +104,13 @@ class _DeliveryPartnerDashboardPageState
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   VerticalStatsCard(
-                      title: 'Pending Deliveries',
+                      title: AppLocalizations.of(context)!.pendingDeliveries,
                       value: totalDeliveries.toString(),
                       icon: Icons.delivery_dining,
                       color: Colors.green),
                   
                   VerticalStatsCard(
-                      title: 'Completed Deliveries',
+                      title: AppLocalizations.of(context)!.completedDeliveries,
                       value: completedDeliveries.toString(),
                       icon: Icons.check_circle,
                       color: Colors.blue),
@@ -125,19 +126,16 @@ class _DeliveryPartnerDashboardPageState
                 controller: PageController(viewportFraction: 0.85),
                 children: [
                   MotivationCard(
-                    title: 'Making a Difference',
-                    content:
-                        'Every delivery ensures food reaches someone in need. You are creating an impact!',
+                    title: AppLocalizations.of(context)!.makingDifference,
+                    content: AppLocalizations.of(context)!.makingDifferenceContent,
                   ),
                   MotivationCard(
-                    title: 'Timely Assistance',
-                    content:
-                        'Your dedication ensures food is delivered fresh and on time!',
+                    title: AppLocalizations.of(context)!.timelyAssistance,
+                    content: AppLocalizations.of(context)!.timelyAssistanceContent,
                   ),
                   MotivationCard(
-                    title: 'Building Hope',
-                    content:
-                        'By connecting donors and needers, you are building hope for a better tomorrow.',
+                    title: AppLocalizations.of(context)!.buildingHope,
+                    content: AppLocalizations.of(context)!.buildingHopeContent,
                   ),
                 ],
               ),
@@ -154,8 +152,8 @@ class _DeliveryPartnerDashboardPageState
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Why Being a Delivery Partner Matters?',
+                  Text(
+                    AppLocalizations.of(context)!.whyPartnerMatters,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -164,8 +162,8 @@ class _DeliveryPartnerDashboardPageState
                   ),
 
                   const SizedBox(height: 16),
-                  const Text(
-                    'As a delivery partner, you play a vital role in bridging the gap between those willing to give and those in need. Your efforts ensure timely delivery of food to the hungry, making an impact one delivery at a time. Your dedication contributes to a hunger-free community.',
+                  Text(
+                    AppLocalizations.of(context)!.partnerRoleDescription,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black87,
@@ -173,13 +171,8 @@ class _DeliveryPartnerDashboardPageState
                   ),
                   const SizedBox(height: 16),
 
-                  // List of captions or key points
-                  const Text(
-                    '• Connects food to the needy.\n'
-                    '• Reduces food waste.\n'
-                    '• Fosters a hunger-free community.\n'
-                    '• Provides timely assistance.\n'
-                    '• Helps save lives and build hope.',
+                  Text(
+                    AppLocalizations.of(context)!.keyPoints,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black87,

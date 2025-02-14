@@ -5,6 +5,7 @@ import 'package:feed_the_needy/Donor_pages/Donor_dashboard_page.dart';
 import 'package:feed_the_needy/Donor_pages/Donor_food_upload.dart';
 import 'package:feed_the_needy/Donor_pages/Donor_profile.dart';
 import 'package:feed_the_needy/Donor_pages/Tracking_order.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -32,10 +33,10 @@ class _DonorMainPageState extends State<DonorMainPage> {
     if (currentUser == null) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Donor Dashboard'),
+          title: Text(AppLocalizations.of(context)!.donorDashboard),
         ),
-        body: const Center(
-          child: Text('No user logged in'),
+        body: Center(
+          child: Text(AppLocalizations.of(context)!.noUserLoggedIn),
         ),
       );
     }
@@ -102,9 +103,8 @@ class _DonorMainPageState extends State<DonorMainPage> {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text('Complete Your Profile'),
-                content: const Text(
-                    'Your profile is incomplete. Please complete your profile to proceed.'),
+                title: Text(AppLocalizations.of(context)!.completeYourProfile),
+                content: Text(AppLocalizations.of(context)!.profileIncompleteMessage),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -116,7 +116,7 @@ class _DonorMainPageState extends State<DonorMainPage> {
                         ),
                       );
                     },
-                    child: const Text('Go to Profile'),
+                    child: Text(AppLocalizations.of(context)!.goToProfile),
                   ),
                 ],
               ),
@@ -156,9 +156,9 @@ class _DonorMainPageState extends State<DonorMainPage> {
             ? const CircularProgressIndicator(
                 color: Colors.white,
               )
-            : const Icon(
-                Icons.add,
-                color: Colors.white,
+            : Text(
+                AppLocalizations.of(context)!.loading,
+                style: TextStyle(color: Colors.white),
               ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

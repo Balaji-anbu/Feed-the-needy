@@ -1,7 +1,8 @@
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:feed_the_needy/Delivery_parntner/delivery_partner_home.dart';
+import 'package:feed_the_needy/Delivery_parntner/delivery_partnerHome.dart';
 import 'package:feed_the_needy/Donor_pages/donar_home.dart';
 import 'package:feed_the_needy/Needer_pages/needer_home.dart';
 import 'package:lottie/lottie.dart';
@@ -20,13 +21,15 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
-          "Select Your Role",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          l10n.selectRole,
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -38,21 +41,20 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Why Role Selection Is Important?',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
+                Text(
+                  l10n.whyRoleImportant,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
-                const SizedBox(
-                  height: 2,
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
+                const SizedBox(height: 2),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Role selection is crucial in this app to personalize the user experience and direct them to functionalities tailored to their specific role—Food Donor, Needer, or Delivery Partner. This ensures efficient service delivery and smooth interaction within the platform.',
-                    style: TextStyle(
+                    l10n.roleSelectionDesc,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                     ),
@@ -62,47 +64,43 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                   height: 30,
                 ),
                 InkWell(
-                  onTap: _isLoading
-                      ? null
-                      : () => _handleRoleSelection('Food Donor'),
+                  onTap: _isLoading ? null : () => _handleRoleSelection(l10n.foodDonorRole),
                   borderRadius: BorderRadius.circular(30),
-                  child: _buildRoleButton("Food Donor 💚", Colors.black),
+                  child: _buildRoleButton(l10n.foodDonorRole, Colors.black),
                 ),
                 const SizedBox(height: 16),
                 InkWell(
-                  onTap: _isLoading
-                      ? null
-                      : () => _handleRoleSelection('Food Needer'),
+                  onTap: _isLoading ? null : () => _handleRoleSelection(l10n.foodNeederRole),
                   borderRadius: BorderRadius.circular(30),
-                  child: _buildRoleButton("Food Needer 🏩️", Colors.black),
+                  child: _buildRoleButton(l10n.foodNeederRole, Colors.black),
                 ),
                 const SizedBox(height: 16),
                 InkWell(
-                  onTap: _isLoading
-                      ? null
-                      : () => _handleRoleSelection('Delivery Partner'),
+                  onTap: _isLoading ? null : () => _handleRoleSelection(l10n.deliveryPartnerRole),
                   borderRadius: BorderRadius.circular(30),
-                  child: _buildRoleButton("Delivery Partner 🚚", Colors.black),
+                  child: _buildRoleButton(l10n.deliveryPartnerRole, Colors.black),
                 ),
                 const SizedBox(
                   height: 40,
                 ),
-                const Center(
+                Center(
                   child: Row(
                     children: [
                       Text(
-                        'NOTE: ',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                        l10n.note,
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                       Text(
-                        "You Can't Change the Role Later",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                        l10n.cantChangeRole,
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                     ],
                   ),
@@ -177,29 +175,24 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
 
   /// Shows a confirmation dialog to the user.
   Future<bool> _showConfirmationDialog(String role) async {
+    final l10n = AppLocalizations.of(context)!;
     return await showDialog<bool>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Confirm Role Selection'),
-            content: Text(
-                'Are you sure you want to continue as $role? This action cannot be changed later.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, false); // User cancels.
-                },
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, true); // User confirms.
-                },
-                child: const Text('Yes'),
-              ),
-            ],
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.confirmRoleTitle),
+        content: Text(l10n.confirmRoleMessage(role)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l10n.cancel),
           ),
-        ) ??
-        false; // Default to false if the dialog is dismissed.
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l10n.yes),
+          ),
+        ],
+      ),
+    ) ?? false;
   }
 
   /// Updates the user's role, FcmToken, and phone number in Firestore and OneSignal.
@@ -263,17 +256,16 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
 
   /// Shows an error dialog.
   void _showErrorDialog(String message) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Error'),
+        title: Text(l10n.error),
         content: Text(message),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.yes),
           ),
         ],
       ),

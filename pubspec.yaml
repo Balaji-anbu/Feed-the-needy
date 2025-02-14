@@ -101,7 +101,16 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-  
+  generate: true
+
+flutter_localizations:
+  sdk: flutter
+
+flutter_intl:
+  enabled: true
+  arb_dir: lib/l10n
+  output_dir: lib/generated
+  use_deferred_loading: false
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -133,7 +142,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-  generate: true
 
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen

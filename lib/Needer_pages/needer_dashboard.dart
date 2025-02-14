@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors, use_super_parameters, avoid_print
 
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -71,21 +72,21 @@ class _FoodNeederDashboardPageState extends State<FoodNeederDashboardPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   StatsCard(
-                      title: 'Available Food',
-                      value: totalAvailableFood.toString()),
+                    title: AppLocalizations.of(context)!.availableFood,
+                    value: totalAvailableFood.toString()
+                  ),
                   StatsCard(
-                      title: 'Claimed Food', value: '12'), // Placeholder value
+                    title: AppLocalizations.of(context)!.claimedFood,
+                    value: '12'
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
 
               // Active Food Listings Section
-              const Text(
-                'Active Food Listings',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+              Text(
+                AppLocalizations.of(context)!.activeFoodListings,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
 
@@ -110,17 +111,14 @@ class _FoodNeederDashboardPageState extends State<FoodNeederDashboardPage> {
               const SizedBox(height: 20),
 
               // Notifications Section
-              const Text(
-                'Notifications',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+              Text(
+                AppLocalizations.of(context)!.notifications,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               NotificationCard(
-                title: 'Food Request Approved',
-                message: 'Your request for "Pasta" has been approved.',
+                title: AppLocalizations.of(context)!.requestApproved,
+                message: AppLocalizations.of(context)!.deliveryInProgressMessage,
                 date: 'Jan 10',
               ),
               NotificationCard(

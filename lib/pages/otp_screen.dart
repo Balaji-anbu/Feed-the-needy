@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:feed_the_needy/Delivery_parntner/delivery_partner_home.dart';
+import 'package:feed_the_needy/Delivery_parntner/delivery_partnerHome.dart';
 import 'package:feed_the_needy/Donor_pages/donar_home.dart';
 import 'package:feed_the_needy/Needer_pages/needer_home.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/pages/role_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,13 +25,15 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
-          "Enter OTP",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          l10n.otpScreenTitle,
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -45,6 +48,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   'assets/otp.json',
                   height: 200,
                   width: 200,
+                  repeat: false,
                 ),
                 const SizedBox(
                   height: 50,
@@ -54,7 +58,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   keyboardType: TextInputType.number,
                   maxLength: 6,
                   decoration: InputDecoration(
-                    hintText: 'Enter OTP',
+                    hintText: l10n.enterOtp,
                     counterText: '',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -66,7 +70,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   onTap: () async {
                     final otp = _otpController.text.trim();
                     if (otp.isEmpty) {
-                      _showSnackBar(context, 'OTP cannot be empty', Colors.red);
+                      _showSnackBar(context, l10n.otpEmpty, Colors.red);
                       return;
                     }
 
@@ -144,10 +148,10 @@ class _OTPScreenState extends State<OTPScreen> {
                         ),
                       ],
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        "Verify OTP",
-                        style: TextStyle(
+                        l10n.verifyOtp,
+                        style: const TextStyle(
                           color: Colors.white, // Text color
                           fontSize: 18, // Font size
                           fontWeight: FontWeight.bold, // Font weight

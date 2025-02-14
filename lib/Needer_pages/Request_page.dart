@@ -1,5 +1,6 @@
 import 'package:feed_the_needy/Needer_pages/Delivery_register.dart';
 import 'package:feed_the_needy/Needer_pages/delivery_track.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lottie/lottie.dart';
@@ -33,22 +34,21 @@ class RequestsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Request Details",
+                  AppLocalizations.of(context)!.requestDetails,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
-                Text("Request ID: ${requestData['request_id'] ?? 'N/A'}"),
-                Text("Food ID: ${requestData['food_id'] ?? 'N/A'}"),
-                Text("Food Name: ${requestData['food_name'] ?? 'N/A'}"),
-                Text("Donor ID: ${requestData['donor_id'] ?? 'N/A'}"),
-                Text("Needer ID: ${requestData['needer_id'] ?? 'N/A'}"),
-                Text("Needer Name: ${requestData['needer_name'] ?? 'N/A'}"),
-                Text("Status: ${requestData['status'] ?? 'N/A'}"),
-                Text("Created At: ${requestData['created_at'] ?? 'N/A'}"),
-                Text("Donor Name: ${requestData['donor_name'] ?? 'N/A'}"),
-                Text(
-                    "Organization Name: ${requestData['organization_name'] ?? 'N/A'}"),
-                Text("Servings: ${requestData['servings'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.requestIdLabel}: ${requestData['request_id'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.foodIdLabel}: ${requestData['food_id'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.foodNameLabel}: ${requestData['food_name'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.donorIdLabel}: ${requestData['donor_id'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.neederIdLabel}: ${requestData['needer_id'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.neederNameLabel}: ${requestData['needer_name'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.statusLabel}: ${requestData['status'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.createdAtLabel}: ${requestData['created_at'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.donorNameLabel}: ${requestData['donor_name'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.organizationNameLabel}: ${requestData['organization_name'] ?? 'N/A'}"),
+                Text("${AppLocalizations.of(context)!.servingsLabel}: ${requestData['servings'] ?? 'N/A'}"),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -68,8 +68,8 @@ class RequestsPage extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(8.0), // Rounded corners
                         ),
-                        child: const Text(
-                          "Close",
+                        child: Text(
+                          AppLocalizations.of(context)!.close,
                           style: TextStyle(
                             color: Colors.white, // Text color
                             fontSize: 16, // Text size
@@ -271,7 +271,7 @@ class RequestsPage extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Choose Delivery Option",
+                                                AppLocalizations.of(context)!.chooseDeliveryOption,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleLarge,
@@ -283,7 +283,7 @@ class RequestsPage extends StatelessWidget {
                                                   Navigator.pop(context);
                                                 },
                                                 child:
-                                                    const Text("Self Pickup"),
+                                                    Text(AppLocalizations.of(context)!.selfPickup),
                                               ),
                                               ElevatedButton(
                                                 onPressed: () {
@@ -301,7 +301,7 @@ class RequestsPage extends StatelessWidget {
                                                   );
                                                 },
                                                 child:
-                                                    const Text("Home Delivery"),
+                                                    Text(AppLocalizations.of(context)!.homeDelivery),
                                               ),
                                             ],
                                           ),
@@ -319,8 +319,8 @@ class RequestsPage extends StatelessWidget {
                                         color: Colors.black,
                                       ),
                                       padding: const EdgeInsets.all(12.0),
-                                      child: const Text(
-                                        "Choose Delivery Option",
+                                      child: Text(
+                                        AppLocalizations.of(context)!.chooseDeliveryOption,
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -375,7 +375,7 @@ class RequestsPage extends StatelessWidget {
                                     );
                                   }
                                 },
-                                child: const Text("Track Delivery"),
+                                child: Text(AppLocalizations.of(context)!.trackDelivery),
                               ))
                           ],
                         ),

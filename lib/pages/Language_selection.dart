@@ -1,6 +1,6 @@
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:feed_the_needy/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageSelectionPage extends StatelessWidget {
   @override
@@ -19,7 +19,7 @@ class LanguageSelectionPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('தமிழ் (Tamil)'),
+            title: Text('Tamil(தமிழ்)'),
             onTap: () {
               _changeLanguage(context, const Locale('ta'));
             },

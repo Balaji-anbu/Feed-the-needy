@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feed_the_needy/Donor_pages/Donor_profile.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -43,7 +44,7 @@ class ProfileCompletionCard extends StatelessWidget {
     User? currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      return const Center(child: Text('No user logged in'));
+      return Center(child: Text(AppLocalizations.of(context)!.noUserLoggedIn));
     }
 
     // ignore: unused_local_variable
@@ -59,11 +60,11 @@ class ProfileCompletionCard extends StatelessWidget {
         }
 
         if (snapshot.hasError) {
-          return const Center(child: Text('Error fetching data'));
+          return Center(child: Text(AppLocalizations.of(context)!.errorFetchingData));
         }
 
         if (!snapshot.hasData) {
-          return const Center(child: Text('No data available'));
+          return Center(child: Text(AppLocalizations.of(context)!.noDataAvailable));
         }
 
         Map<String, dynamic> profileData = snapshot.data!;
@@ -97,8 +98,8 @@ class ProfileCompletionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Profile Completion',
+                  Text(
+                    AppLocalizations.of(context)!.profileCompletion,
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -115,7 +116,7 @@ class ProfileCompletionCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '${completionPercentage.toStringAsFixed(0)}% Complete',
+                    AppLocalizations.of(context)!.percentComplete(completionPercentage.toStringAsFixed(0)),
                     style: const TextStyle(color: Colors.white70),
                   ),
                   if (!isProfileComplete)
@@ -127,8 +128,8 @@ class ProfileCompletionCard extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) =>
                                     const DonorProfilePage())),
-                        child: const Text(
-                          'Complete Profile',
+                        child: Text(
+                          AppLocalizations.of(context)!.completeProfile,
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),

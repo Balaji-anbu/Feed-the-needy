@@ -2,6 +2,7 @@
 import 'package:feed_the_needy/Needer_pages/Needer_available_food.dart';
 import 'package:feed_the_needy/Needer_pages/Request_page.dart';
 import 'package:feed_the_needy/Needer_pages/needer_dashboard.dart';
+import 'package:feed_the_needy/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class NeederFoodRequestPage extends StatefulWidget {
@@ -46,18 +47,18 @@ class _NeederPageState extends State<NeederFoodRequestPage> {
         selectedFontSize: 15,
         currentIndex: _currentIndex,
         onTap: _onNavItemTapped,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+            icon: const Icon(Icons.dashboard),
+            label: AppLocalizations.of(context)!.dashboard,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.food_bank),
-            label: 'Available Food',
+            icon: const Icon(Icons.food_bank),
+            label: AppLocalizations.of(context)!.availableFoodTab,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'Your Requests',
+            icon: const Icon(Icons.list_alt),
+            label: AppLocalizations.of(context)!.yourRequests,
           ),
         ],
       ),
